@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+  <meta charset="UTF-8">
+  <title>Elvis Page</title>
+</head>
+<body>
+<p>Elvis Operator</p>
+<p th:text="${isAdmin}?'Welcome Admin':'Welcome Welcome'"></p>
+
+<p>If Unless </p>
+<p th:if="${isAdmin}">Male</p>
+<p th:if="${gender}== 'M'">Male</p>
+<p th:unless="${gender}== 'M'">Female</p>
+<p>Swith Case </p>
+<div th:switch="${gender}">
+  <p th:case="M">Male</p>
+<p th:case="F">FeMale</p>
+</div>
+</body>
+</html>

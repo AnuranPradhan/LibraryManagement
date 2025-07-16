@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serenity Library</title>
+    <link rel="stylesheet" th:href="@{/css/bookStyle.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f9f4e9 0%, #f0e6d6 100%);
+            color: #5a4e3e;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            text-align: center;
+            padding: 50px 20px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-circle {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #a67c52 0%, #8c6239 100%);
+            border-radius: 50%;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(166, 124, 82, 0.3);
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            color: #f9f4e9;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            color: #5a4e3e;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .tagline {
+            font-size: 1.6rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-weight: 300;
+            color: #7d6d54;
+        }
+
+        /* Decorative Elements */
+        .decorative-shape {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(166, 124, 82, 0.08);
+            z-index: 1;
+        }
+
+        .shape-1 {
+            top: -150px;
+            left: -150px;
+        }
+
+        .shape-2 {
+            bottom: -150px;
+            right: -150px;
+        }
+
+        /* Book Showcase */
+        .showcase-section {
+            padding: 60px 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: #5a4e3e;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #a67c52;
+            border-radius: 2px;
+        }
+
+        .book-showcase {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .book-item {
+            width: 180px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .book-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .book-cover {
+            height: 250px;
+            width: 180px;
+            background: linear-gradient(135deg, #d4c0a1 0%, #c5b090 100%);
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(90, 78, 62, 0.2);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .book-cover::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 50%, rgba(255,255,255,0.1) 100%);
+        }
+
+        .book-icon {
+            font-size: 4rem;
+            color: rgba(90, 78, 62, 0.3);
+        }
+
+        .book-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #5a4e3e;
+            margin-bottom: 5px;
+        }
+
+        .book-author {
+            color: #8c7a63;
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+
+        /* Features Section */
+        .features-section {
+            background: rgba(166, 124, 82, 0.05);
+            padding: 80px 0;
+            border-radius: 20px;
+            margin: 60px 0;
+            position: relative;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(90, 78, 62, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(166, 124, 82, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(90, 78, 62, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            color: #a67c52;
+            margin-bottom: 25px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #5a4e3e;
+        }
+
+        .feature-card p {
+            color: #7d6d54;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        /* Quote Section */
+        .quote-section {
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .quote-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .quote-text {
+            font-size: 2.2rem;
+            font-style: italic;
+            color: #5a4e3e;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            position: relative;
+            z-index: 2;
+        }
+
+        .quote-author {
+            font-size: 1.4rem;
+            color: #8c7a63;
+            font-weight: 500;
+        }
+
+        .quote-decoration {
+            position: absolute;
+            font-size: 15rem;
+            color: rgba(166, 124, 82, 0.07);
+            z-index: 1;
+        }
+
+        .quote-left {
+            top: -50px;
+            left: -20px;
+        }
+
+        .quote-right {
+            bottom: -80px;
+            right: -20px;
+            transform: rotate(180deg);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #5a4e3e 0%, #473e30 100%);
+            color: #e0d6c3;
+            padding: 80px 0 30px;
+            border-radius: 40px 40px 0 0;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            color: #f9f4e9;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #a67c52;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: #c8bcab;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .footer-links a:hover {
+            color: #f9f4e9;
+            transform: translateX(5px);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1rem;
+            color: #c8bcab;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(166, 124, 82, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #f9f4e9;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(166, 124, 82, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            transition: all 0.3s ease;
+            color: #f9f4e9;
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            background: #a67c52;
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(200, 188, 171, 0.2);
+            margin-top: 50px;
+            font-size: 1rem;
+            color: #c8bcab;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8rem; }
+            .tagline { font-size: 1.3rem; }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .quote-text {
+                font-size: 1.7rem;
+            }
+
+            .feature-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="navbar" th:insert="Base :: header"></div>
+<!-- Header Section -->
+<header>
+    <div class="decorative-shape shape-1"></div>
+    <div class="decorative-shape shape-2"></div>
+
+    <div class="container">
+        <div class="header-content">
+            <div class="logo-circle">
+                <div class="logo">
+                    <i class="fas fa-book-open"></i>
+                </div>
+            </div>
+            <h1>Library Management System</h1>
+            <p class="tagline">Where Stories Come to Life and Knowledge Finds Its Home</p>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+    <!-- Book Showcase -->
+    <section class="showcase-section">
+        <h2 class="section-title">Featured Collection</h2>
+        <div class="book-showcase">
+            <div class="book-item">
+                <div class="book-cover">
+                    <i class="fas fa-book book-icon"></i>
+                </div>
+                <div class="book-title">The Midnight Library</div>
+                <div class="book-author">Matt Haig</div>
+            </div>
+
+            <div class="book-item">
+                <div class="book-cover">
+                    <i class="fas fa-book book-icon"></i>
+                </div>
+                <div class="book-title">Klara and the Sun</div>
+                <div class="book-author">Kazuo Ishiguro</div>
+            </div>
+
+            <div class="book-item">
+                <div class="book-cover">
+                    <i class="fas fa-book book-icon"></i>
+                </div>
+                <div class="book-title">The Four Winds</div>
+                <div class="book-author">Kristin Hannah</div>
+            </div>
+
+            <div class="book-item">
+                <div class="book-cover">
+                    <i class="fas fa-book book-icon"></i>
+                </div>
+                <div class="book-title">Where the Crawdads Sing</div>
+                <div class="book-author">Delia Owens</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-book-reader"></i>
+                </div>
+                <h3>Reading Spaces</h3>
+                <p>Cozy reading nooks with comfortable seating and natural light, perfect for immersing yourself in a good book.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Community Events</h3>
+                <p>Join our book clubs, author talks, and literary workshops designed to bring readers together.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-child"></i>
+                </div>
+                <h3>Children's Corner</h3>
+                <p>A magical space filled with colorful books and activities to inspire young minds and foster a love of reading.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote Section -->
+    <section class="quote-section">
+        <div class="quote-container">
+            <div class="quote-decoration quote-left">
+                <i class="fas fa-quote-left"></i>
+            </div>
+
+            <div class="quote-text">
+                A library is not a luxury but one of the necessities of life.
+            </div>
+
+            <div class="quote-author">
+                Henry Ward Beecher
+            </div>
+
+            <div class="quote-decoration quote-right">
+                <i class="fas fa-quote-left"></i>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h3>Serenity Library</h3>
+                <p style="color: #c8bcab; margin-bottom: 25px; line-height: 1.7; font-size: 1.1rem;">
+                    A sanctuary for readers and learners in the heart of our community since 1985.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-pinterest"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h3>Explore</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Collections</a></li>
+                    <li><a href="#">New Arrivals</a></li>
+                    <li><a href="#">Staff Picks</a></li>
+                    <li><a href="#">Rare Books</a></li>
+                    <li><a href="#">Digital Archive</a></li>
+                </ul>
+            </div>
+
+
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <span>123 Knowledge Lane, Bookville</span>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <span>(555) 123-4567</span>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <span>welcome@serenitylibrary.org</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            &copy; 2023 Serenity Library. All rights reserved. | Crafted with <i class="fas fa-heart" style="color: #a67c52;"></i> for book lovers
+        </div>
+    </div>
+</footer>
+</body>
+</html>
